@@ -1,0 +1,10 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h1>Yeni post</h1>
+    <h4>Decoding için lütfen text ve title alanına id'yi giriniz. </h4>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default" name="save">Kaydet</button>
+    </form>
+{% endblock %}
