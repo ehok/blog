@@ -15,34 +15,24 @@ def post_new(request):
     if request.method == "POST" and "save" in request.POST:
         form = PostForm(request.POST)
         if form.is_valid():
-            plaintext = request.POST["text"]
+            plaintext = request.POST["plaintext"]
             key = request.POST["key"]
             cipher_text = encrypt(plaintext, key)
+            decrypted_text = decrypt(cipher_text, key)
             post = form.save(commit=False)
             post.title = request.POST["title"]
-            post.text = plaintext + '|' + str(cipher_text)
+            post.text = ""
+            post.plaintext = plaintext
+            post.ciphertext = cipher_text
+            post.decrypted = decrypted_text
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
             return redirect('post_list')
-    #elif request.method == "POST" and "decode_btn" in request.POST:
-    #    form = PostForm(request.POST)
-    #    if form.is_valid():
-    #        des = DES.new('01234567', DES.MODE_ECB)
-    #        id = form.cleaned_data['text']
-    #        cipher_text = Post.objects.get(id=id)
-    #        print(cipher_text.text)
-    #        plaintext = des.decrypt(cipher_text.text)
-    #        post = form.save(commit=False)
-    #        post.title = cipher_text.title
-    #        post.text = unpadding(str(plaintext))
-    #        post.author = request.user
-    #        post.published_date = timezone.now()
-    #        post.save()
-    #        return redirect('post_list')
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form})
+
 
 def padding(text:str):
     temp = len(bytes(text,"utf8")) % 8
@@ -56,10 +46,11 @@ def unpadding(text:str):
 
 def encrypt(plaintext:str, key:str):
     des = DES.new(key, DES.MODE_ECB)
-    cipher_text = des.encrypt(padding(plaintext))
+    plaintext_text = bytes(padding(plaintext), "utf8")
+    cipher_text = des.encrypt(plaintext_text)
     return cipher_text
 
 def decrypt(cipher_text:str, key:str):
     des = DES.new(key, DES.MODE_ECB)
-    plaintext = des.decrypt(cipher_text.text)
-    return unpadding(plaintext)
+    plaintext = des.decrypt(cipher_text)
+    return unpadding(plaintext.decode("utf-8"))

@@ -10,7 +10,10 @@ class Post(models.Model):
             default=timezone.now)
     published_date = models.DateTimeField(
             blank=True, null=True)
-    key = models.CharField(max_length=500,default='some strings')
+    key = models.CharField(max_length=500,default='')
+    plaintext = models.TextField(default='')
+    ciphertext = models.TextField(default='')
+    decrypted = models.TextField(default='')
 
     def publish(self):
         self.published_date = timezone.now()

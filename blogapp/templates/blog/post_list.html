@@ -5,10 +5,11 @@
         <div class="post">
             <div class="date">
                 {{ post.published_date }}
-                <h4>ID: {{ post.id }}</h4>
             </div>
             <h2><a href="">{{ post.title }}</a></h2>
-            <p>{{ post.text|linebreaksbr }}</p>
+            <h4>Plaintext:</h4><p>{{ post.plaintext|linebreaksbr }}</p>
+            <h4>Ciphertext:</h4><p>{{ post.ciphertext|linebreaksbr }}</p>
+            <h4>Decryptedtext:</h4><p>{{ post.decrypted|linebreaksbr }}</p>
         </div>
     {% endfor %}
 {% endblock %}
