@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% for comment in comments %}
+        <div class="post">
+            <div class="date">
+                {{ comment.published_date }}
+            </div>
+            <h4>Random Text:</h4><p>{{ comment.random_text|linebreaksbr }}</p>
+            <h4>Frequency Analysis:</h4><p>{{ comment.frequencyOfLetter|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

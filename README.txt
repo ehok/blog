@@ -22,3 +22,19 @@ Mert Öngengil 15253041
     Projeyi Çalıştırma
 
         ~ Proje dizininde "sudo docker-compose up -d" komutu çalıştırılır
+
+
+
+    Ödev 2 için
+
+        pgadmin ile veritabanını güncelleyebilirsiniz. ("username:postgres","password:postgres","port:5432")
+
+        DES algoritmasını kullandım. Kendi seçtiğim key '01234567' dir. DES algoritmasını kullanabilmek için padding yapmam gerekti. 
+        Sebebi ise metnimin uzunlugunun 8'in katı olmasını sağlamak.
+
+
+    Ödev 3 için
+
+        Rastgele dağılım başarılı olması için numpy modülünü kullandım. Frekans analizi için ise 
+        rastgele metini oluştururken harflerden oluşan ordered dictionary nin deger kısmında tekrar sayılarını tuttum.
+        Ve analiz edebilmek için standart sapmasını hesaplayarak yazdırdım. 
