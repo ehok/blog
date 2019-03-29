@@ -1,10 +1,16 @@
 from django.shortcuts import render
 from django.utils import timezone
-from .models import Post, Comments
+from .models import Post, Comments, Signatures
 from .forms import PostForm
 from django.shortcuts import redirect
 from Crypto.Cipher import DES
 from collections import OrderedDict
+
+import Crypto
+from Crypto.PublicKey import RSA
+from Crypto import Random
+import ast
+
 import numpy as np
 import math as m
 import sys
@@ -25,6 +31,41 @@ def post_list(request):
         post.decrypted = decrypted_text
         post.save()
     return render(request, 'blog/post_list.html', {'posts': posts})
+
+def signature_list(request):
+    text = random_generator(100)
+
+    random_daVinci = Random.new().read
+    daVinciPrivKey = RSA.generate(1024, random_daVinci)
+    random_bobRoss = Random.new().read
+    bobRossPrivKey = RSA.generate(1024, random_bobRoss)
+
+    daVinciPubKey = daVinciPrivKey.publickey()
+    bobRossPubKey = bobRossPrivKey.publickey()
+
+    encryptedText = daVinciPubKey.encrypt(text.encode('utf-8'), 32)
+
+    print(encryptedText)
+
+    try:
+        decryptedText_daVinci = daVinciPrivKey.decrypt(encryptedText).decode('utf-8')
+    except:
+        decryptedText_daVinci = "Key Çözülemedi"
+    
+    try:
+        decryptedText_bobRoss = (bobRossPrivKey.decrypt(encryptedText)).decode('utf-8')
+    except:
+        decryptedText_bobRoss = "Bob Ross'un Private Key'i ile bu metni çözemezsiniz."
+
+    signature = Signatures.objects.create(text=text, daVinciPrivKey=daVinciPrivKey, daVinciPubKey=daVinciPubKey, bobRossPrivKey=bobRossPrivKey, bobRossPubKey=bobRossPubKey, decryptedText_daVinci=decryptedText_daVinci, decryptedText_bobRoss=decryptedText_bobRoss, published_date=timezone.now())
+
+    signature.save()
+
+    signatures = Signatures.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+
+
+    return render(request, 'blog/signature_list.html', {'signatures': signatures}) 
+
 
 def comment_list(request):
     random_text = random_generator(1000)

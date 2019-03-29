@@ -38,3 +38,10 @@ Mert Öngengil 15253041
         Rastgele dağılım başarılı olması için numpy modülünü kullandım. Frekans analizi için ise 
         rastgele metini oluştururken harflerden oluşan ordered dictionary nin deger kısmında tekrar sayılarını tuttum.
         Ve analiz edebilmek için standart sapmasını hesaplayarak yazdırdım. 
+
+
+    Ödev 4 için 
+
+        Bir önceki ödevde yazdığım rastgele metin üreten methodu kullanarak ürettiğim metini önce Da Vinci'nin private key'i ile RSA 1024 bit şifreliyorum ardından
+        önce Da Vinci'nin private key'i ile deşifre ediyor sonrasında Bob Ross'un private key'i ile deşifre etmeyi deniyorum ve hata dönüyor bunu 'try except' bloğunda 
+        yakalayıp veritabanına bu şifreyi Bob Ross'un private key'i ile çözemezsiniz şeklinde kaydediyorum.

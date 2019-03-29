@@ -26,3 +26,15 @@ class Comments(models.Model):
 
     #def __str__(self):
     #    return self.text
+
+
+class Signatures(models.Model):
+    text = models.TextField(null=True)
+    daVinciPrivKey = models.TextField(null=True)
+    daVinciPubKey = models.TextField(null=True)
+    bobRossPrivKey = models.TextField(null=True)
+    bobRossPubKey = models.TextField(null=True)
+    decryptedText_daVinci = models.TextField(null=True)
+    decryptedText_bobRoss = models.TextField(null=True)
+    published_date = models.DateTimeField(
+            blank=True, null=True)

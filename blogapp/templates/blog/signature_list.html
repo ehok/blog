@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% for signature in signatures %}
+        <div class="post">
+            <div class="date">
+                {{ signature.published_date }}
+            </div>
+            <h4>Metin:</h4><p>{{ signature.text|linebreaksbr }}</p>
+            <h4>Da Vinci'nin Anahtarıyla: </h4><p>{{ signature.decryptedText_daVinci|linebreaksbr }}</p>
+            <h4>Bob Ross'un Anahtarıyla: </h4><p>{{ signature.decryptedText_bobRoss|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
